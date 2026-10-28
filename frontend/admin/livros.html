@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerenciar Livros - AcademyHub</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/livros-admin.css">
+  <style>
+    /* Estilos para os diferentes status */
+.book-status-text.available {
+  color: #28a745 !important;
+  font-weight: 600;
+}
+
+.book-status-text.reserved {
+  color: #ffc107 !important;
+  font-weight: 600;
+}
+
+.book-status-text.borrowed {
+  color: #dc3545 !important;
+  font-weight: 600;
+}
+
+/* Estilo para o item do livro baseado no status */
+.book-item[data-status="disponível"],
+.book-item[data-status="disponivel"] {
+  border-left: 4px solid #28a745;
+}
+
+.book-item[data-status="reservado"] {
+  border-left: 4px solid #ffc107;
+}
+
+.book-item[data-status="emprestado"] {
+  border-left: 4px solid #dc3545;
+}
+
+/* Opcional: Fundo sutil para diferentes status */
+.book-item[data-status="reservado"] {
+  background-color: rgba(255, 193, 7, 0.05);
+}
+
+.book-item[data-status="emprestado"] {
+  background-color: rgba(220, 53, 69, 0.05);
+}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <div class="logo">
+        <img src="../images/logo.png.png" style="width:95px; height:95px;">
+        AcademyHub
+      </div>
+      <div class="user-menu">
+        <div class="user-avatar">A</div>
+        <span id="userName">Admin</span>
+        <button class="btn-logout" onclick="logout()">
+          <i class="fas fa-sign-out-alt"></i> Sair
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="page-header">
+      <h1 class="page-title">Gerenciar Livros</h1>
+      <div class="header-actions">
+        <button class="btn-add-book" onclick="openAddModal()"><i class="fas fa-plus"></i> Adicionar Livro</button>
+        <div class="total-badge" title="Total de Livros">
+          <div class="total-label" style="font-size:0.85rem; color: var(--text-gray);">Total</div>
+          <div id="booksTotal" class="total-number">0</div>
+        </div>
+        <a href="dashboard.html" class="btn-back"><i class="fas fa-arrow-left"></i> Voltar</a>
+      </div>
+    </div>
+
+    <div class="search-container">
+      <input type="text" class="search-input" id="searchInput" placeholder="Buscar por título, autor ou ISBN...">
+      <div class="filter-tabs">
+        <div class="filter-tab active" data-filter="all">Todos</div>
+        <div class="filter-tab" data-filter="available">Disponíveis</div>
+        <div class="filter-tab" data-filter="borrowed">Emprestados</div>
+      </div>
+    </div>
+
+    <div class="books-list" id="booksGrid"></div>
+
+    <div id="emptyState" class="empty-state" style="display:none;">
+      <i class="fas fa-book"></i>
+      <h3>Nenhum livro encontrado</h3>
+      <p>Adicione o primeiro livro ao acervo da biblioteca</p>
+    </div>
+  </main>
+
+  <!-- Modal -->
+  <div class="modal" id="bookModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalTitle">Adicionar Livro</h2>
+        <button class="btn-close-modal" onclick="closeModal()"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+        <form id="bookForm">
+          <input type="hidden" id="bookId">
+
+          <div class="form-group">
+            <label class="form-label">Título *</label>
+            <input type="text" class="form-input" id="bookTitle" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Autor *</label>
+            <input type="text" class="form-input" id="bookAuthor" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">ISBN</label>
+            <input type="text" class="form-input" id="bookISBN">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Ano</label>
+            <input type="number" class="form-input" id="bookYear">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Editora</label>
+            <input type="text" class="form-input" id="bookPublisher">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Categoria</label>
+            <input type="text" class="form-input" id="bookCategory">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Descrição</label>
+            <textarea class="form-textarea" id="bookDescription"></textarea>
+          </div>
+
+          <button type="submit" class="btn-submit"><i class="fas fa-save"></i> Cadastrar livro </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  <script src="../js/firebase-config.js"></script>
+  <script src="../js/livros-admin.js"></script>
+
+</body>
+</html>

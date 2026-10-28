@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AcademyHub - Sistema Bibliotecário Inteligente</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --teal: #4a9b9b;
+            --blue: #2980b9;
+            --green: #7cb342;
+            --orange: #ff9800;
+            --light-green: #a8d982;
+            --white: #ffffff;
+            --yellow: #f2cc07;
+            --light-gray: #f8f9fa;
+            --dark-gray: #2c3e50;
+            --text-gray: #5a6c7d;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--dark-gray);
+            overflow-x: hidden;
+            background: linear-gradient(135deg, var(--light-gray) 0%, var(--white) 50%, var(--light-gray) 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--white) 0%, var(--light-gray) 100%);
+            padding: 1rem 0;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--blue);
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+            background: linear-gradient(45deg, var(--teal), var(--green));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+
+        .header-nav {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .header-nav a {
+            text-decoration: none;
+            color: var(--text-gray);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .header-nav a:hover {
+            color: var(--blue);
+            transform: translateY(-2px);
+        }
+
+        .header-nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background: var(--green);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .header-nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Main Container */
+        .main-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 20px 20px;
+            position: relative;
+        }
+
+        .main-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 100%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(124, 179, 66, 0.1), transparent);
+            transform: rotate(15deg);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: rotate(15deg) translateY(0px);
+            }
+
+            50% {
+                transform: rotate(15deg) translateY(-20px);
+            }
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--teal), var(--green), var(--orange));
+        }
+
+        .card-header {
+            text-align: center;
+            padding: 2rem 2rem 1rem;
+        }
+
+        .main-logo {
+            font-size: 2.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--blue), var(--teal));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .main-logo i {
+            background: linear-gradient(135deg, var(--green), var(--light-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: var(--text-gray);
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .card-body {
+            padding: 1rem 2rem 2rem;
+        }
+
+        /* User Type Buttons */
+        .btn-user-type {
+            width: 100%;
+            padding: 1.2rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 15px;
+            margin: 0.5rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-user-type i,
+        .btn-user-type .bi,
+        .btn-user-type .fa,
+        .btn-user-type svg,
+        .btn-user-type .svg-inline--fa {
+            font-size: 1.25rem !important;
+            line-height: 1 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 1.4rem !important;
+            height: 1.4rem !important;
+            vertical-align: middle !important;
+        }
+
+        .btn-student {
+            background: linear-gradient(135deg, var(--blue), var(--teal));
+            color: white;
+            box-shadow: 0 6px 20px rgba(41, 128, 185, 0.3);
+        }
+
+        .btn-admin {
+            background: linear-gradient(135deg, var(--orange), var(--yellow));
+            color: white;
+            box-shadow: 0 6px 20px rgba(255, 152, 0, 0.3);
+        }
+
+        .btn-user-type:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-student:hover {
+            box-shadow: 0 10px 30px rgba(41, 128, 185, 0.4);
+        }
+
+        .btn-admin:hover {
+            box-shadow: 0 10px 30px rgba(255, 152, 0, 0.4);
+        }
+
+        /* Auth Options */
+        .auth-options-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .auth-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--dark-gray);
+            margin: 0;
+        }
+
+        .btn-back {
+            background: transparent;
+            color: var(--text-gray);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-back:hover {
+            background: var(--light-gray);
+            color: var(--dark-gray);
+            transform: translateY(-1px);
+        }
+
+        .auth-buttons-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .btn-auth {
+            padding: 1rem 1.5rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .btn-login {
+            background: linear-gradient(135deg, var(--green), var(--light-green));
+            color: white;
+            box-shadow: 0 4px 15px rgba(124, 179, 66, 0.3);
+        }
+
+        .btn-register {
+            background: linear-gradient(135deg, var(--teal), var(--blue));
+            color: white;
+            box-shadow: 0 4px 15px rgba(74, 155, 155, 0.3);
+        }
+
+        .btn-auth:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-login:hover {
+            box-shadow: 0 8px 25px rgba(124, 179, 66, 0.4);
+        }
+
+        .btn-register:hover {
+            box-shadow: 0 8px 25px rgba(74, 155, 155, 0.4);
+        }
+
+        /* Form Styles */
+        .form-floating {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            font-size: 1rem;
+            background: white;
+            transition: all 0.3s ease;
+            color: var(--dark-gray);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px rgba(41, 128, 185, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .form-floating label {
+            position: absolute;
+            top: 1rem;
+            left: 1.2rem;
+            color: var(--text-gray);
+            transition: all 0.3s ease;
+            pointer-events: none;
+            background: white;
+            padding: 0 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-control:focus+label,
+        .form-control:not(:placeholder-shown)+label {
+            top: -0.5rem;
+            font-size: 0.85rem;
+            color: var(--blue);
+            font-weight: 500;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: linear-gradient(135deg, var(--blue), var(--teal));
+            color: white;
+            border: none;
+            padding: 1.2rem 2rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            box-shadow: 0 6px 20px rgba(41, 128, 185, 0.3);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(41, 128, 185, 0.4);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Loading Spinner */
+        .loading {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid transparent;
+            border-top: 2px solid currentColor;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .loading.show {
+            display: inline-block;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Alert Styles */
+        .alert {
+            padding: 1rem 1.2rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            border: none;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .alert-success {
+            background: linear-gradient(135deg, #d4edda, #c3e6cb);
+            color: #155724;
+            border-left: 4px solid var(--green);
+        }
+
+        .alert-danger {
+            background: linear-gradient(135deg, #f8d7da, #f1b0b7);
+            color: #721c24;
+            border-left: 4px solid #dc3545;
+        }
+
+        .btn-close {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: currentColor;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+            margin-left: auto;
+        }
+
+        .btn-close:hover {
+            opacity: 1;
+        }
+
+        /* Section Management */
+        .section {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .section.hide {
+            display: none !important;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .header-nav {
+                display: none;
+            }
+
+            .main-container {
+                padding: 100px 15px 15px;
+            }
+
+            .card {
+                max-width: 100%;
+                margin: 0 10px;
+            }
+
+            .main-logo {
+                font-size: 2.2rem;
+            }
+
+            .auth-buttons-row {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+
+            .auth-options-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .card-header {
+                padding: 1.5rem 1.5rem 1rem;
+            }
+
+            .card-body {
+                padding: 1rem 1.5rem 1.5rem;
+            }
+
+            .main-logo {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="main-container">
+        <div class="card">
+            <div class="card-header">
+                <div class="main-logo">
+                    <img src="images/logo.png.png" alt="Logo" style="width:95px; height:95px;">
+                    AcademyHub
+                </div>
+                <p class="subtitle">Sistema Bibliotecário Inteligente</p>
+            </div>
+
+            <div class="card-body">
+                <!-- Seleção do tipo de usuário -->
+                <div id="userTypeSection" class="section">
+                    <h4 style="text-align: center; margin-bottom: 1.5rem; color: var(--dark-gray); font-weight: 600;">
+                        Selecione o tipo de acesso:</h4>
+                    <button class="btn-user-type btn-student" onclick="selectUserType('student')">
+                        <i class="bi bi-person-fill"></i>
+                        Sou Aluno
+                    </button>
+                    <button class="btn-user-type btn-admin" onclick="selectUserType('admin')">
+                        <i class="fas fa-user-cog"></i>
+                        Sou Administrador
+                    </button>
+                </div>
+
+                <!-- Opções de autenticação -->
+                <div id="authOptionsSection" class="section hide">
+                    <div class="auth-options-header">
+                        <h5 id="userTypeTitle" class="auth-title">Acesso de Aluno</h5>
+                        <button class="btn-back" onclick="goBack()">
+                            <i class="fas fa-arrow-left"></i>
+                            Voltar
+                        </button>
+                    </div>
+
+                    <div class="auth-buttons-row">
+                        <button class="btn-auth btn-login" onclick="showAuthForm('login')">
+                            <i class="fas fa-sign-in-alt"></i>
+                            Fazer Login
+                        </button>
+                        <button class="btn-auth btn-register" onclick="showAuthForm('register')">
+                            <i class="fas fa-user-plus"></i>
+                            Cadastrar-se
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Formulário de autenticação -->
+                <div id="authFormSection" class="section hide">
+                    <div class="auth-options-header">
+                        <h5 id="formTitle" class="auth-title">Login</h5>
+                        <button class="btn-back" onclick="goBackToOptions()">
+                            <i class="fas fa-arrow-left"></i>
+                            Voltar
+                        </button>
+                    </div>
+
+                    <div id="alertContainer"></div>
+
+                    <form id="authForm">
+                        <div id="nameField" style="display: none;">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="name" placeholder=" ">
+                                <label for="name">
+                                    <i class="fas fa-user"></i>
+                                    Nome completo
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-floating">
+                            <input type="email" class="form-control" id="email" placeholder=" " required>
+                            <label for="email">
+                                <i class="fas fa-envelope"></i>
+                                Email
+                            </label>
+                        </div>
+
+                        <div class="form-floating">
+                            <input type="password" class="form-control" id="password" placeholder=" " required>
+                            <label for="password">
+                                <i class="fas fa-lock"></i>
+                                Senha
+                            </label>
+                        </div>
+
+                        <div id="confirmPasswordField" style="display: none;">
+                            <div class="form-floating">
+                                <input type="password" class="form-control" id="confirmPassword" placeholder=" ">
+                                <label for="confirmPassword">
+                                    <i class="fas fa-lock"></i>
+                                    Confirmar senha
+                                </label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-submit" id="submitBtn">
+                            <span class="loading" role="status"></span>
+                            <span id="submitText">Entrar</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentUserType = '';
+        let currentAuthType = '';
+
+        function selectUserType(userType) {
+            currentUserType = userType;
+
+            // Atualizar título
+            const title = userType === 'student' ? 'Acesso de Aluno' : 'Acesso de Administrador';
+            document.getElementById('userTypeTitle').textContent = title;
+
+            // Administrador só faz login: o perfil admin é definido pelo console do Firebase
+            document.querySelector('.btn-register').style.display = userType === 'admin' ? 'none' : '';
+
+            // Mostrar seção de opções de auth
+            hideSection('userTypeSection');
+            showSection('authOptionsSection');
+        }
+
+        function showAuthForm(authType) {
+            currentAuthType = authType;
+
+            // Configurar formulário baseado no tipo
+            if (authType === 'register') {
+                document.getElementById('formTitle').textContent = 'Cadastro';
+                document.getElementById('submitText').textContent = 'Cadastrar';
+                document.getElementById('nameField').style.display = 'block';
+                document.getElementById('confirmPasswordField').style.display = 'block';
+                document.getElementById('name').required = true;
+                document.getElementById('confirmPassword').required = true;
+            } else {
+                document.getElementById('formTitle').textContent = 'Login';
+                document.getElementById('submitText').textContent = 'Entrar';
+                document.getElementById('nameField').style.display = 'none';
+                document.getElementById('confirmPasswordField').style.display = 'none';
+                document.getElementById('name').required = false;
+                document.getElementById('confirmPassword').required = false;
+            }
+
+            // Limpar formulário
+            document.getElementById('authForm').reset();
+            clearAlert();
+
+            // Mostrar formulário
+            hideSection('authOptionsSection');
+            showSection('authFormSection');
+        }
+
+        function goBack() {
+            hideSection('authOptionsSection');
+            showSection('userTypeSection');
+            currentUserType = '';
+        }
+
+        function goBackToOptions() {
+            hideSection('authFormSection');
+            showSection('authOptionsSection');
+            currentAuthType = '';
+            clearAlert();
+        }
+
+        function showSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            section.classList.remove('hide');
+        }
+
+        function hideSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            section.classList.add('hide');
+        }
+
+        function showAlert(message, type = 'danger') {
+            const iconClass = type === 'success' ? 'fa-check-circle' : 'fa-exclamation-triangle';
+            const alertHtml = `
+                <div class="alert alert-${type}">
+                    <i class="fas ${iconClass}"></i>
+                    ${message}
+                    <button type="button" class="btn-close" onclick="clearAlert()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            document.getElementById('alertContainer').innerHTML = alertHtml;
+        }
+
+        function clearAlert() {
+            document.getElementById('alertContainer').innerHTML = '';
+        }
+
+        function showLoading(show) {
+            const loading = document.querySelector('.loading');
+            const submitBtn = document.getElementById('submitBtn');
+
+            if (show) {
+                loading.classList.add('show');
+                submitBtn.disabled = true;
+            } else {
+                loading.classList.remove('show');
+                submitBtn.disabled = false;
+            }
+        }
+
+        // Manipular envio do formulário
+        document.getElementById('authForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const name = document.getElementById('name').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            // Validações básicas
+            if (currentAuthType === 'register') {
+                if (password !== confirmPassword) {
+                    showAlert('As senhas não coincidem!');
+                    return;
+                }
+
+                if (password.length < 6) {
+                    showAlert('A senha deve ter pelo menos 6 caracteres!');
+                    return;
+                }
+
+                if (!name.trim()) {
+                    showAlert('Nome é obrigatório!');
+                    return;
+                }
+            }
+
+            // Simular processo de autenticação
+            showLoading(true);
+            clearAlert();
+
+            // Aqui você vai conectar com o Firebase
+            // Processo de autenticação REAL com Firebase
+            showLoading(true);
+            clearAlert();
+
+            if (currentAuthType === 'register') {
+                // CADASTRO REAL
+                auth.createUserWithEmailAndPassword(email, password)
+                    .then((userCredential) => {
+                        const user = userCredential.user;
+
+                        // Salvar dados do usuário no Firestore
+                        return db.collection('users').doc(user.uid).set({
+                            name: name,
+                            email: email,
+                            role: 'aluno',
+                            createdAt: new Date()
+                        });
+                    })
+                    .then(() => {
+                        showLoading(false);
+                        showAlert('Cadastro realizado com sucesso! Faça login para continuar.', 'success');
+                        setTimeout(() => {
+                            showAuthForm('login');
+                        }, 2000);
+                    })
+                    .catch((error) => {
+                        showLoading(false);
+                        let errorMsg = 'Erro ao criar conta.';
+                        if (error.code === 'auth/email-already-in-use') {
+                            errorMsg = 'Este email já está em uso!';
+                        } else if (error.code === 'auth/invalid-email') {
+                            errorMsg = 'Email inválido!';
+                        }
+                        showAlert(errorMsg);
+                        console.error('Erro:', error);
+                    });
+            } else {
+                // LOGIN REAL
+                auth.signInWithEmailAndPassword(email, password)
+                    .then((userCredential) => {
+                        const user = userCredential.user;
+                        showLoading(false);
+                        showAlert('Login realizado com sucesso! Redirecionando...', 'success');
+
+                        // Redirecionar baseado no tipo escolhido
+                        setTimeout(() => {
+                            if (currentUserType === 'student') {
+                                window.location.replace('aluno/dashboard.html');
+                            } else {
+                                window.location.replace('admin/dashboard.html');
+                            }
+                        }, 1500);
+                    })
+                    .catch((error) => {
+                        showLoading(false);
+                        let errorMsg = 'Erro no login.';
+                        if (error.code === 'auth/user-not-found') {
+                            errorMsg = 'Usuário não encontrado!';
+                        } else if (error.code === 'auth/wrong-password') {
+                            errorMsg = 'Senha incorreta!';
+                        } else if (error.code === 'auth/invalid-email') {
+                            errorMsg = 'Email inválido!';
+                        }
+                        showAlert(errorMsg);
+                        console.error('Erro:', error);
+                    });
+            } // Simular delay de 2 segundos
+        });
+
+        // Header background on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.backdropFilter = 'blur(10px)';
+            } else {
+                header.style.background = 'linear-gradient(135deg, var(--white) 0%, var(--light-gray) 100%)';
+                header.style.backdropFilter = 'blur(10px)';
+            }
+        });
+
+        // Smooth scrolling para links internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+    <!-- Nossa configuração -->
+    <script src="js/firebase-config.js"></script>
+</body>
+
+</html>

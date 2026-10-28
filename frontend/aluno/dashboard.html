@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - AcademyHub</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/dashboard-aluno.css">
+</head>
+
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="../images/logo.png.png" style="width:95px; height:95px;">
+                </div>
+                AcademyHub
+            </div>
+            <ul class="header-nav">
+                <li><a href="../index.html">Início</a></li>
+                <li><a href="../sobre.html">Sobre</a></li>
+                <li><a href="../contato.html">Contato</a></li>
+            </ul>
+            <div class="user-menu">
+                <div class="user-info">
+                    <div class="user-avatar">A</div>
+                    <span>Aluno</span>
+                </div>
+                <button class="btn-logout" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Sair
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">Bem-vindo, Aluno!</h1>
+            <p class="page-subtitle">Gerencie seus empréstimos, explore o catálogo e interaja com nosso assistente
+                virtual.</p>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="dashboard-card card-emprestimos">
+                    <div class="card-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                <h3 class="card-title">Meus Empréstimos</h3>
+                <p class="card-subtitle">Acompanhe seus livros emprestados e prazos de devolução</p>
+
+                <button class="btn-card btn-emprestimos" onclick="window.location.href='emprestimos.html'">
+                    <i class="fas fa-arrow-right"></i>
+                    Ver Empréstimos
+                </button>
+            </div>
+
+            <div class="dashboard-card card-catalogo">
+                <div class="card-icon">
+                    <i class="bi bi-search"></i>
+                </div>
+                <h3 class="card-title">Catálogo de Livros</h3>
+                <p class="card-subtitle">Explore nossa coleção e encontre seu próximo livro</p>
+                <button class="btn-card btn-catalogo" onclick="window.location.href='catalogo.html'">
+                    <i class="fas fa-arrow-right"></i>
+                    Explorar Catálogo
+                </button>
+            </div>
+
+            <div class="dashboard-card card-chatbot">
+                <div class="card-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+             <h3 class="card-title">Assistente Virtual</h3>
+                <p class="card-subtitle">Converse com nosso chatbot para obter ajuda e recomendações</p>
+               <a href="../chatbot.html" >   <button class="btn-card btn-chatbot">
+                    <i class="fas fa-arrow-right"></i>
+                 Iniciar Conversa 
+                
+                </button></a>
+            </div>
+        </div>
+    </main>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="../js/firebase-config.js"></script>
+    <script src="../js/dashboard-aluno.js"></script>
+</body>
+
+</html>

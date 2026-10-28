@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Livros - AcademyHub</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/catalogo-aluno.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="../images/logo.png.png" alt="Logo" style="width:95px; height:95px;">
+                </div>
+                AcademyHub
+            </div>
+            <div class="user-menu">
+                <div class="user-avatar">A</div>
+                <span id="userName">Aluno</span>
+                <button class="btn-logout" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Sair
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="page-header">
+            <h1 class="page-title">Catálogo de Livros</h1>
+            <div class="header-actions">
+                <div class="total-badge" title="Total de Livros">
+                    <div class="total-label" style="font-size:0.85rem; color: var(--text-gray);">Total</div>
+                    <div id="totalBooksHeader" class="total-number">0</div>
+                </div>
+                <a href="dashboard.html" class="btn-back"><i class="fas fa-arrow-left"></i> Voltar</a>
+            </div>
+        </div>
+
+        <div class="filter-cards">
+            <div class="filter-card active" onclick="filterBooks('todos')" id="filter-todos">
+                <div class="filter-number" id="totalBooks">0</div>
+                <div class="filter-label">Todos os Livros</div>
+            </div>
+            <div class="filter-card" onclick="filterBooks('disponivel')" id="filter-disponivel">
+                <div class="filter-number" id="availableBooks">0</div>
+                <div class="filter-label">Disponíveis</div>
+            </div>
+            <div class="filter-card" onclick="filterBooks('emprestado')" id="filter-emprestado">
+                <div class="filter-number" id="loanedBooks">0</div>
+                <div class="filter-label">Emprestados</div>
+            </div>
+            <div class="filter-card" onclick="filterBooks('reservado')" id="filter-reservado">
+                <div class="filter-number" id="reservedBooks">0</div>
+                <div class="filter-label">Reservados</div>
+            </div>
+        </div>
+
+        <div class="search-container">
+            <input type="text" class="search-input" id="searchInput" placeholder="Buscar por título, autor ou editora...">
+        </div>
+
+        <div class="books-container">
+            <h3 class="section-title">Lista de Livros</h3>
+            <div class="books-list" id="booksList">
+                <div class="empty-state">Carregando livros...</div>
+            </div>
+        </div>
+
+        <div id="emptyState" class="empty-state" style="display:none;">
+            <i class="fas fa-book"></i>
+            <h3>Nenhum livro encontrado</h3>
+            <p>Não há livros cadastrados no catálogo</p>
+        </div>
+    </main>
+
+    <!-- Modal de Sucesso -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <i class="fas fa-check-circle modal-icon"></i>
+            <h2 class="modal-title">Livro Reservado com Sucesso!</h2>
+            <p class="modal-message">
+                O livro foi reservado para você e já está disponível para retirada na biblioteca física. 
+                Por favor, dirija-se à biblioteca para efetuar a retirada.
+            </p>
+            <button class="btn-modal-close" onclick="closeModal()">Entendi</button>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="../js/firebase-config.js"></script>
+    <script src="../js/catalogo-aluno.js"></script>
+    
+</body>
+</html>

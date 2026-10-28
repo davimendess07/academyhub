@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin - AcademyHub</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/dashboard-admin.css">
+
+</head>
+
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="../images/logo.png.png" style="width:95px; height:95px;">
+                </div>
+                AcademyHub
+            </div>
+            <ul class="header-nav">
+                <li><a href="../index.html">Inicio</a></li>
+                <li><a href="../sobre.html">Sobre</a></li>
+                <li><a href="../contato.html">Contato</a></li>
+            </ul>
+            <div class="user-menu">
+                <div class="user-info">
+                    <div class="user-avatar">A</div>
+                    <span>Administrador</span>
+                </div>
+                <button class="btn-logout" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Sair
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">Bem-vindo, Administrador!</h1>
+            <p class="page-subtitle">Gerencie nossa biblioteca de forma efetiva com as funções disponíveis abaixo.</p>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="dashboard-card card-livros">
+                <div class="card-icon">
+                    <i class="fas fa-book"></i>
+                </div>
+                <h3 class="card-title">Gerenciar Livros</h3>
+                <p class="card-subtitle">Adicione, edite ou remova livros do acervo</p>
+
+                <button class="btn-card btn-livros" onclick="window.location.href='livros.html'">
+                    <i class="fas fa-arrow-right"></i>
+                    Gerenciar Livros
+                </button>
+                <!-- Modal Livros -->
+                <div id="booksInfoModal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 2000; align-items: center; justify-content: center;">
+                    <div class="modal-content" style="background: white; padding: 2rem; border-radius: 15px; max-width: 400px; width: 90%;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <h3 style="font-size: 1.2rem; font-weight: 600; color: var(--dark-gray);">Informações dos Livros</h3>
+                            <button onclick="closeModal('booksInfoModal')" style="background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-gray);"><i class="fas fa-times"></i></button>
+                        </div>
+                        <ul style="list-style: none; padding: 0;">
+                            <li><b>Total:</b> <span id="totalBooks">1</span></li>
+                            <li><b>Disponível:</b> <span id="availableBooks">1</span></li>
+                            <li><b>Emprestado:</b> <span id="loanedBooks">0</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-card card-emprestimos">
+                <div class="card-icon">
+                    <i class="bi bi-calendar-plus"></i>
+                </div>
+                <h3 class="card-title">Empréstimos</h3>
+                <p class="card-subtitle">Registre e controle empréstimos e devoluções</p>
+
+                <button class="btn-card btn-emprestimos" onclick="window.location.href='emprestimos-admin.html'">
+                    <i class="fas fa-arrow-right"></i>
+                    Novo Empréstimo
+                </button>
+                <!-- Modal Empréstimos -->
+                <div id="loansInfoModal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 2000; align-items: center; justify-content: center;">
+                    <div class="modal-content" style="background: white; padding: 2rem; border-radius: 15px; max-width: 400px; width: 90%;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <h3 style="font-size: 1.2rem; font-weight: 600; color: var(--dark-gray);">Informações de Empréstimos</h3>
+                            <button onclick="closeModal('loansInfoModal')" style="background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-gray);"><i class="fas fa-times"></i></button>
+                        </div>
+                        <ul style="list-style: none; padding: 0;">
+                            <li><b>Ativo:</b> <span id="activeLoans">1</span></li>
+                            <li><b>Em Atraso:</b> <span id="overdueLoans">0</span></li>
+                            <li><b>Histórico:</b> <span id="historyLoans">1</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-card card-usuarios">
+                <div class="card-icon">
+                    <i class="bi bi-people-fill"></i>
+                </div>
+                <h3 class="card-title">Usuários</h3>
+                <p class="card-subtitle">Visualize e gerencie os usuários cadastrados</p>
+                <button class="btn-card btn-usuarios" onclick="window.location.href='usuarios-admin.html'">
+                    <i class="fas fa-arrow-right"></i>
+                    Ver Usuários
+                </button>
+                <!-- Modal Usuários -->
+                <div id="usersInfoModal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 2000; align-items: center; justify-content: center;">
+                    <div class="modal-content" style="background: white; padding: 2rem; border-radius: 15px; max-width: 400px; width: 90%;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <h3 style="font-size: 1.2rem; font-weight: 600; color: var(--dark-gray);">Informações de Usuários</h3>
+                            <button onclick="closeModal('usersInfoModal')" style="background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-gray);"><i class="fas fa-times"></i></button>
+                        </div>
+                        <ul style="list-style: none; padding: 0;">
+                            <li><b>Ativos:</b> <span id="activeUsers">1</span></li>
+                            <li><b>Inativos:</b> <span id="inactiveUsers">0</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        <script>
+        function openBooksInfoModal() {
+            document.getElementById('booksInfoModal').style.display = 'flex';
+        }
+        function openLoansInfoModal() {
+            document.getElementById('loansInfoModal').style.display = 'flex';
+        }
+        function openUsersInfoModal() {
+            document.getElementById('usersInfoModal').style.display = 'flex';
+        }
+        </script>
+            </div>
+        </div>
+
+        <div class="recent-activity">
+            <h3>Empréstimos Recentes</h3>
+            <div id="recentLoans">
+                <p style="text-align: center; color: var(--text-gray); padding: 2rem;">Carregando...</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal Novo Empréstimo -->
+    <div id="newLoanModal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 2000; align-items: center; justify-content: center;">
+        <div class="modal-content" style="background: white; padding: 2rem; border-radius: 15px; max-width: 600px; width: 90%;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <h3 style="font-size: 1.5rem; font-weight: 600; color: var(--dark-gray);">Novo Empréstimo</h3>
+                <button onclick="closeModal('newLoanModal')" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-gray);">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="newLoanForm">
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--dark-gray);">Email do Aluno *</label>
+                    <input type="email" id="studentEmail" required style="width: 100%; padding: 0.8rem; border: 2px solid var(--light-gray); border-radius: 8px; font-size: 1rem;">
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--dark-gray);">Título do Livro *</label>
+                    <select id="loanBookId" required style="width: 100%; padding: 0.8rem; border: 2px solid var(--light-gray); border-radius: 8px; font-size: 1rem;">
+                        <option value="">Selecione um livro...</option>
+                    </select>
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--dark-gray);">Data de Devolução *</label>
+                    <input type="date" id="dueDate" required style="width: 100%; padding: 0.8rem; border: 2px solid var(--light-gray); border-radius: 8px; font-size: 1rem;">
+                </div>
+                <button type="submit" style="width: 100%; background: linear-gradient(135deg, var(--blue), var(--teal)); color: white; padding: 1rem; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer;">
+                    <i class="fas fa-check"></i> Registrar Empréstimo
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Devolver Livro -->
+    <div id="returnBookModal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 2000; align-items: center; justify-content: center;">
+        <div class="modal-content" style="background: white; padding: 2rem; border-radius: 15px; max-width: 600px; width: 90%;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <h3 style="font-size: 1.5rem; font-weight: 600; color: var(--dark-gray);">Devolver Livro</h3>
+                <button onclick="closeModal('returnBookModal')" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-gray);">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="returnBookForm">
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--dark-gray);">Selecione o Empréstimo *</label>
+                    <select id="returnLoanId" required style="width: 100%; padding: 0.8rem; border: 2px solid var(--light-gray); border-radius: 8px; font-size: 1rem;">
+                        <option value="">Carregando...</option>
+                    </select>
+                </div>
+                <button type="submit" style="width: 100%; background: linear-gradient(135deg, var(--green), var(--light-green)); color: white; padding: 1rem; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer;">
+                    <i class="fas fa-check"></i> Confirmar Devolução
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="../js/firebase-config.js"></script>
+    <script src="../js/dashboard-admin.js"></script>
+    
+</body>
+
+</html>

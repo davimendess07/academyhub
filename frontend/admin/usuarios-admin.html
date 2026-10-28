@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Usuários - AcademyHub</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/usuarios-admin.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="../images/logo.png.png" style="width:95px; height:95px;">
+                AcademyHub
+            </div>
+            <div class="user-menu">
+                <div class="user-avatar">A</div>
+                <span id="userName">Admin</span>
+                <button class="btn-logout" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Sair
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="page-header">
+            <h1 class="page-title">Gerenciar Usuários</h1>
+            <div class="header-actions">
+                <div class="total-badge" title="Total de Usuários">
+                    <div class="total-label" style="font-size:0.85rem; color: var(--text-gray);">Total</div>
+                    <div id="totalUsersHeader" class="total-number">0</div>
+                </div>
+                <a href="dashboard.html" class="btn-back"><i class="fas fa-arrow-left"></i> Voltar</a>
+            </div>
+        </div>
+
+        <div class="stats-cards">
+            <div class="stat-card">
+                <div class="stat-number" id="totalUsers">0</div>
+                <div class="stat-label">Total de Usuários</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="usersWithLoans">0</div>
+                <div class="stat-label">Com Empréstimos Ativos</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="usersWithOverdue">0</div>
+                <div class="stat-label">Com Livros Atrasados</div>
+            </div>
+        </div>
+
+        <div class="search-container">
+            <input type="text" class="search-input" id="searchInput" placeholder="Buscar por nome ou email...">
+        </div>
+
+        <div class="users-container">
+            <h3 class="section-title">Lista de Usuários</h3>
+            <div class="users-list" id="usersList">
+                <div class="empty-state">Carregando usuários...</div>
+            </div>
+        </div>
+
+        <div id="emptyState" class="empty-state" style="display:none;">
+            <i class="fas fa-users"></i>
+            <h3>Nenhum usuário encontrado</h3>
+            <p>Não há usuários cadastrados no sistema</p>
+        </div>
+    </main>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="../js/firebase-config.js"></script>
+    <script src="../js/usuarios-admin.js"></script>
+   
+</body>
+</html>

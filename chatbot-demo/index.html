@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AcademyHub - Alex, seu assistente virtual</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="chatbot-container">
+        
+        <!-- Header -->
+        <div class="chatbot-header">
+            <div class="logo-container">
+                <div class="logo-icon">
+                    <img src="imagens/Lex.jpg" alt="Lex - Mascote AcademyHub">
+                </div>
+                <div class="logo-text">
+                    <h1>Lex - AcademyHub</h1>
+                    <p>Seu guia pelos galhos do conhecimento</p>
+                </div>
+            </div>
+            <button id="themeToggle" class="theme-toggle" title="Alternar tema">
+                🌙
+            </button>
+        </div>
+
+        <!-- Mensagens -->
+        <div class="messages-area" id="messagesArea">
+            <div class="message-wrapper assistant">
+                <div class="message-bubble assistant">
+                    Olá! Sou o Lex, mascote do AcademyHub!
+                    <br><br>
+                    Estou aqui para te ajudar a pular pelos galhos do conhecimento.
+                    <br><br>
+                    Posso te auxiliar com:
+                    <br>• Dúvidas sobre livros da biblioteca
+                    <br>• Explicações de matérias escolares
+                    <br>• Dicas de estudo e aprendizado
+                    <br>• Perguntas sobre a plataforma
+                    <br><br>
+                    Como posso te ajudar?
+                </div>
+            </div>
+        </div>
+
+        <!-- Input -->
+        <div class="input-area">
+            <div class="input-container">
+                <textarea 
+                    id="userInput" 
+                    class="chat-input" 
+                    placeholder="Pergunte algo ao Lex..."
+                    rows="1"
+                ></textarea>
+                <button id="sendButton" class="send-button" disabled>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                </button>
+            </div>
+            <p class="powered-by">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                </svg>
+                Powered by Google Gemini AI
+            </p>
+        </div>
+
+    </div>
+
+    <div class="bg-effect bg-effect-1"></div>
+    <div class="bg-effect bg-effect-2"></div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return signedIn()
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    function onlyChanges(fields) {
+      return request.resource.data.diff(resource.data).affectedKeys().hasOnly(fields);
+    }
+
+    // Usuários: cada um lê o próprio perfil; admin lê todos.
+    // No cadastro só é possível criar perfil de aluno. Admin é definido pelo console.
+    match /users/{userId} {
+      allow read: if signedIn() && (request.auth.uid == userId || isAdmin());
+      allow create: if signedIn() && request.auth.uid == userId
+                    && request.resource.data.role == 'aluno';
+      allow update, delete: if isAdmin();
+    }
+
+    // Livros: qualquer usuário logado consulta; admin gerencia;
+    // aluno só pode alterar os campos de reserva.
+    match /books/{bookId} {
+      allow read: if signedIn();
+      allow create, delete: if isAdmin();
+      allow update: if isAdmin()
+                    || (signedIn() && onlyChanges(['status', 'reservedBy', 'reservedAt'])
+                        && request.resource.data.reservedBy == request.auth.uid);
+    }
+
+    // Empréstimos: usuários logados consultam; admin gerencia;
+    // aluno só renova o próprio empréstimo.
+    match /rentals/{rentalId} {
+      allow read: if signedIn();
+      allow create, delete: if isAdmin();
+      allow update: if isAdmin()
+                    || (signedIn() && resource.data.userId == request.auth.uid
+                        && onlyChanges(['dueDate', 'renewCount', 'lastRenewDate']));
+    }
+  }
+}
